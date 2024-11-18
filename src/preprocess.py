@@ -31,7 +31,7 @@ def preprocess(filePath, vibrators_map):
 
 if __name__ == "__main__":
     
-    filePath = "data/raw/Vivaldi Winter (1st movement) - LUKA SULIC [ ezmp3.cc ].mp3"
+    #Trocar para qualqer arquivo .mp3
     filePath = librosa.example('nutcracker')
     vibrators_map = {
     "low": {"min": 20, "max": 200},         
