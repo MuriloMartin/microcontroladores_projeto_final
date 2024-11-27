@@ -2,9 +2,10 @@ from serial import Serial
 from time import sleep
 
 
-meu_serial = Serial(port='COM5', baudrate=9600)
+meu_serial = Serial(port='/dev/ttyUSB0', baudrate=9600)
 
-lista = [["bass",0.1],["bass",0.5],["bass",0.5],["bass",0.1],["bass",0.5],["bass",0.8],["bass",1]]
+lista = [["bass 30",0.5],["bass 60",0.5],["bass 100",0.5],["bass 150",0.5],["bass 200",0.5],["bass 255",0.5]]
+
 
 sleep(2)
 
