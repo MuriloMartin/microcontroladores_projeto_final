@@ -8,7 +8,7 @@ import json
 def preprocess(filePath, vibrators_map):
     y, sr = librosa.load(filePath, sr=None)
 
-    hop_length = 512
+    hop_length = 2048
     tempo, beats = librosa.beat.beat_track(y=y, sr=sr, hop_length=hop_length)
     beat_times = librosa.frames_to_time(beats, sr=sr, hop_length=hop_length)
 
@@ -18,6 +18,7 @@ def preprocess(filePath, vibrators_map):
     result = {}
     result['y'] = y.tolist()
     result["sr"] = sr
+    result["beats"] = beats.tolist()
     for key in vibrators_map:
         min_freq = vibrators_map[key]['min']
         max_freq = vibrators_map[key]['max']
