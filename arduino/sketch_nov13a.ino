@@ -1,44 +1,50 @@
-#define TREBLE 31
-#define INTENSITY 32
-#define BASS 6
+#define TREBLE1 11
+#define TREBLE2 10
+#define BASS_R 9
+#define BASS_L 8
 
-void bass(){
-  digitalWrite(BASS,LOW);
-  delay(100);
-  digitalWrite(BASS,HIGH);
+void bassOn(int intensity){
+  analogWrite(BASS_R, intensity);
+  digitalWrite(BASS_L, LOW);
 }
 
-/*
-void testaBaixo(){
-    bass();
-    delay(100);
-    bass();
-    delay(50);
-    bass();
-}*/
-
+void bassBreak(){
+  digitalWrite(BASS_R,LOW);
+  digitalWrite(BASS_L, HIGH);
+  delay(50);
+  digitalWrite(BASS_L,LOW);
+}
 
 void setup() {
   Serial.begin(9600);
-  pinMode(INTENSITY, OUTPUT);
-  pinMode(TREBLE, OUTPUT);
-  pinMode(BASS, OUTPUT);
-  digitalWrite(TREBLE, LOW);
-  digitalWrite(BASS, HIGH);
+  pinMode(TREBLE1, OUTPUT);
+  pinMode(TREBLE2, OUTPUT);
+  pinMode(BASS_R, OUTPUT);
+  pinMode(BASS_L, OUTPUT);
+  digitalWrite(TREBLE1, LOW);
+  digitalWrite(TREBLE2, LOW);
+  digitalWrite(BASS_R, LOW);
+  digitalWrite(BASS_L, LOW);
+  digitalWrite(1,LOW);
   //testaBaixo();
+
 }
 
 void loop() {
   if (Serial.available() > 0) {
     String command = Serial.readStringUntil('\n');
     command.trim();
+
     //Serial.println(command);
-    if(command=="on") digitalWrite(TREBLE, HIGH);
-    else if(command=="off") digitalWrite(TREBLE, LOW);
-    else if(command=="up") digitalWrite(INTENSITY,LOW);
-    else if(command=="down") digitalWrite(INTENSITY, HIGH);
-    else if(command=="bass") bass();
-    else if(command=="bass on") digitalWrite(BASS,LOW);
-    else if(command=="bass off") digitalWrite(BASS,HIGH);
+    if(command.startsWith("on")) {
+      digitalWrite(TREBLE1, HIGH);
+      digitalWrite(TREBLE2, HIGH);
+      }
+    else if(command.startsWith("off")) {
+      digitalWrite(TREBLE1, LOW);
+      digitalWrite(TREBLE2, LOW);
+      }
+    else if(command=="bass off") bassBreak();
+    else if(command.startsWith("bass")) bassOn(command.substring(5).toInt());
   }
 }
